@@ -6,8 +6,49 @@
 	</head>
 	<body>
 		<div id="main-container">
-			<h1>Where's your adventure?</h1>
-			<input type="text" placeholder="enter a city" id="search-bar" />
+			<div id="error-message" v-if="error">
+				Location not recognized, try again.
+			</div>
+			<div id="search-container" v-if="seen">
+				<h1>Where's your adventure?</h1>
+				<input
+					type="text"
+					placeholder="enter a city"
+					id="search-bar"
+					v-on:keyup.enter="handleEnter"
+				/>
+			</div>
+			<div id="weather-container" v-else>
+				<h1>
+					{{weather.desc}} in {{weather.name}}, {{weather.country}}.
+				</h1>
+				<div id="info">
+					<h3>Local time: {{weather.localTime}}</h3>
+					<h3>
+						It's currently {{weather.currentTemp}}c and feels like
+						{{weather.feelsLike}}c.
+					</h3>
+					<h3>
+						UV is {{weather.uv}} and wind is
+						{{weather.wind_kph}}kph.
+					</h3>
+					<br />
+					<h5 id="go-back" @click="searchAgain">Somewhere else?</h5>
+				</div>
+				<div id="bored-api">Bored? Why not {{weather.activity}}?</div>
+			</div>
+			<div id="cred">
+				Powered by
+				<a href="https://www.weatherapi.com/" title="Free Weather API"
+					>WeatherAPI.com</a
+				>
+				and
+				<a
+					href="https://www.boredapi.com/about"
+					title="Free Activities API"
+					>BoredAPI.com</a
+				>
+			</div>
 		</div>
 		<script src="/js/vue.js"></script>
 		<script src="/js/axios.min.js"></script>

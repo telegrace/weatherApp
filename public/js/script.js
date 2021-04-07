@@ -3,30 +3,29 @@ new Vue({
 	data: {
 		name: "Irn Bru",
 		seen: true,
+		error: false,
 		cities: [],
+		weather: [],
+		searchTerm: "",
 	},
 	mounted: function () {
 		console.log("my main vue instance has mounted!");
-		// we will use axios to communicate with our server
-		console.log("this.cities: ", this.cities);
-		console.log("this: ", this);
-		var self = this;
-		axios
-			.get("/cities")
-			.then(function (response) {
-				console.log("this.cities after axios: ", this.cities);
-				console.log("this after axios: ", this);
-				console.log("response", response.data);
-				console.log("self: ", self);
-				self.cities = response.data;
-			})
-			.catch(function (err) {
-				console.log("error in axios", err);
-			});
 	},
 	methods: {
-		handleClick: function (city) {
-			console.log("handleClick running!!", city);
+		handleEnter: function (event) {
+			console.log("You typed", event.target.value);
+			axios.get("/test/" + event.target.value).then(({ data }) => {
+				if (data.success === true) {
+					this.seen = !this.seen;
+					this.error = false;
+					console.log("GRACE", data.weather);
+					this.weather = data.weather;
+				} else {
+					this.error = true;
+				}
+			});
+		},
+		searchAgain: function () {
 			this.seen = !this.seen;
 		},
 	},

@@ -6,11 +6,17 @@
 }
 body {
 	color: #5e6472;
-	background-color: #b8f2e6;
+}
+#error-message {
+	position: absolute;
+	padding: 10px;
+	color: white;
+	background-color: #5e6472;
+	width: 100%;
 }
 
 #main-container {
-	width: 100vw;
+	width: 100%;
 	height: 100vh;
 	display: flex;
 	background-color: white;
@@ -19,12 +25,36 @@ body {
 }
 
 h1 {
-	margin-left: -30vh;
+	margin: 10px;
+	margin-left: -25vh;
 	margin-top: -15vh;
 	font-size: 3em;
 }
 
+h3,
+h5 {
+	text-align: right;
+}
+
+h5:hover {
+	transform: rotate3d(1, 2, 3, 10deg);
+}
+
+#bored-api {
+	background-color: #5e6472;
+	color: white;
+	margin-top: 20px;
+	padding: 10px;
+	text-align: right;
+}
 #search-bar {
-	position: absolute;
 	font-size: 2em;
+	width: 400px;
+}
+
+#cred {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	margin: 10px;
 }
