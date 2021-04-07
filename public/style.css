@@ -1,0 +1,30 @@
+* {
+	margin: 0;
+	box-sizing: border-box;
+	font-family: "Courier New", Courier, monospace;
+	text-align: center;
+}
+body {
+	color: #5e6472;
+	background-color: #b8f2e6;
+}
+
+#main-container {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	background-color: white;
+	justify-content: center;
+	align-items: center;
+}
+
+h1 {
+	margin-left: -30vh;
+	margin-top: -15vh;
+	font-size: 3em;
+}
+
+#search-bar {
+	position: absolute;
+	font-size: 2em;
+}
