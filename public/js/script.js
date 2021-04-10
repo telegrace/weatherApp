@@ -4,6 +4,7 @@ new Vue({
 		name: "Irn Bru",
 		seen: true,
 		error: false,
+		loading: false,
 		cities: [],
 		weather: [],
 		searchTerm: "",
@@ -13,11 +14,13 @@ new Vue({
 	},
 	methods: {
 		handleEnter: function (event) {
+			this.loading = true;
 			console.log("You typed", event.target.value);
 			axios.get("/test/" + event.target.value).then(({ data }) => {
 				if (data.success === true) {
-					this.seen = !this.seen;
+					this.loading = false;
 					this.error = false;
+					this.seen = !this.seen;
 					console.log("GRACE", data.weather);
 					this.weather = data.weather;
 				} else {

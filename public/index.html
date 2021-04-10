@@ -6,8 +6,9 @@
 	</head>
 	<body>
 		<div id="main-container">
+			<div id="loading-message" v-if="loading">Loading...</div>
 			<div id="error-message" v-if="error">
-				Location not recognized, try again.
+				<p>Location not recognized, try again.</p>
 			</div>
 			<div id="search-container" v-if="seen">
 				<h1>Where's your adventure?</h1>
@@ -20,10 +21,17 @@
 			</div>
 			<div id="weather-container" v-else>
 				<h1>
-					{{weather.desc}} in {{weather.name}}, {{weather.country}}.
+					<img
+						v-bind:src="weather.image"
+						alt="weather icon"
+					/>{{weather.desc}}<img
+						v-bind:src="weather.image"
+						alt="weather icon"
+					/>
+					in {{weather.name}}, {{weather.country}}.
 				</h1>
 				<div id="info">
-					<h3>Local time: {{weather.localTime}}</h3>
+					<h3>Local time is {{weather.localTime}}.</h3>
 					<h3>
 						It's currently {{weather.currentTemp}}c and feels like
 						{{weather.feelsLike}}c.
@@ -35,7 +43,9 @@
 					<br />
 					<h5 id="go-back" @click="searchAgain">Somewhere else?</h5>
 				</div>
-				<div id="bored-api">Bored? Why not {{weather.activity}}?</div>
+				<div id="bored-api">
+					<p>Bored? Why not {{weather.activity}}?</p>
+				</div>
 			</div>
 			<div id="cred">
 				Powered by

@@ -1,9 +1,12 @@
 const express = require("express");
 const app = express();
 const axios = require("axios");
-const { secret } = require("./secret.json");
-const { response } = require("express");
-
+let secret;
+if (process.env.SECRET) {
+	secret = process.env.SECRET;
+} else {
+	secret = require("./secret.json").secret;
+}
 app.use(express.static("public"));
 
 function getRandomIntInclusive(min, max) {
@@ -34,6 +37,7 @@ app.get("/test/:city", (req, res) => {
 			`http://api.weatherapi.com/v1/current.json?key=${secret}&q=${req.params.city}`
 		)
 		.then(({ data }) => {
+			console.log(data);
 			let activity;
 			if (data.current.condition.code < 1031) {
 				activity = Math.floor(Math.random() * 4);
@@ -55,7 +59,9 @@ app.get("/test/:city", (req, res) => {
 							uv: data.current.uv,
 							wind_kph: data.current.wind_kph,
 							localTime: data.location.localtime.slice(10),
-							image: data.current.condition.icon,
+							image:
+								"https://" +
+								data.current.condition.icon.slice(2),
 							activity: bored_data.data.activity.toLowerCase(),
 						},
 						success: true,
@@ -70,34 +76,6 @@ app.get("/test/:city", (req, res) => {
 		});
 });
 
-app.listen(8080, () => console.log("Weather App up and running..."));
-
-//there are 47 codes
-/*
-{
-    "location": {
-        "name": "Hong Kong",
-        "country": "Hong Kong",
-        "lat": 22.28,
-        "lon": 114.15,
-        "localtime": "2021-04-07 18:09"
-    },
-    "current": {
-        "temp_c": 22.3,
-        "condition": {
-            "text": "Cloudy",
-            "icon": "//cdn.weatherapi.com/weather/64x64/day/119.png",
-            "code": 1006
-        },
-        "wind_kph": 24.1,
-        "wind_dir": "E",
-        "humidity": 78,
-        "feelslike_c": 24.7,
-        "vis_km": 10.0,
-        "uv": 5.0,
-    }
-}
-*/
-/*error	
-code	1006
-message	"No matching location found." */
+app.listen(process.env.PORT || 8080, () =>
+	console.log("Weather App up and running...")
+);
